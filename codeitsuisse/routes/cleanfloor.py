@@ -16,6 +16,7 @@ logger = logging.getLogger(__name__)
 def clean_floor():
 	req = request.get_json()
 	print(type(req))
+	print(req)
 	res = {
 		"answers": {}
 	}
