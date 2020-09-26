@@ -3,7 +3,7 @@ import socket
 from codeitsuisse import  app
 logger = logging.getLogger(__name__)
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['POST'])
 def default_route():
     return "Python Template";
 
@@ -24,4 +24,4 @@ if __name__ == "__main__":
     sock.bind(('localhost', 0))
     port = sock.getsockname()[1]
     sock.close()
-    app.run(port=port)
+    app.run(port=5000)
