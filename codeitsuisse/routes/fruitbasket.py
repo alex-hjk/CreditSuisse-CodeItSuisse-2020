@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 def fruit_basket():
 	# Parsing input
 	data = request.get_json();
-	print(type(data))
+	print(data)
 	apple_qty = data["maApple"]
 	watermelon_qty = data["maWatermelon"]
 	banana_qty = data["maBanana"]
