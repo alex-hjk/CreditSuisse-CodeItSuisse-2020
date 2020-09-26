@@ -40,7 +40,7 @@ def numWays(info):
 	else:
 		r = numPeople
 		n = r+numSeats-minSeats
-		return getFactorial(n)/(getFactorial(r)*getFactorial(n-r))
+		return int(getFactorial(n)/(getFactorial(r)*getFactorial(n-r)))
 	
 
 def getFactorial(num):
