@@ -24,6 +24,8 @@ def fruit_basket():
 	# Load the JSON to a Python list & dump it back out as formatted JSON
 	data = json.loads(my_json)
 
+	print(data)
+
 	apple_qty = data["maApple"]
 	watermelon_qty = data["maWatermelon"]
 	banana_qty = data["maBanana"]
@@ -35,7 +37,3 @@ def fruit_basket():
 	total = apple_qty * apple_mass + watermelon_mass * watermelon_qty + banana_mass * banana_qty
 
 	return json.dumps(total)
-
-
-	return 'hello'
-
