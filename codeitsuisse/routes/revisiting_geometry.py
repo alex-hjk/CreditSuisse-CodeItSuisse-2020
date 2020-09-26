@@ -39,7 +39,8 @@ def evaluateGeometry():
         v = abs(a * q["x"] + b * q["y"] + c)
         x, y = (p["x"] * v + q["x"] * u) / (u + v), (p["y"] * v + q["y"] * u) / (u + v)
         result.append({"x": x, "y": y})
-
+        
+    logging.info("My result :{}".format(result))
     return jsonify(result)
 
 
