@@ -15,46 +15,36 @@ logger = logging.getLogger(__name__)
 
 @app.route('/social_distancing', methods=['POST'])
 def social_distancing():
-	# Parsing input
-	data = request.get_json();
+	req = request.get_json()
+	res = {
+		"answers": {}
+	}
+	for test in req["tests"]:
+		res["answers"][test] = numWays(req["tests"][test])
+	
+factorials = [1]
 
-	test_dict = data['tests']
-
-	output = {"answers": {}}
-
-
-	for key, val in test_dict.items():
-		memo = {}
-		seats = val["seats"]
-		people = val["people"]
-		spaces = val["spaces"]
-
-		output["answers"][key] = SD(seats, people, spaces, (seats, people, spaces), memo)
-		print(memo)
-
-	return json.dumps(output)
-
-
-def SD(seats, people, spaces, pas, memo):
-
-	if memo.get((seats, people, spaces), None):
-		return memo[(seats, people, spaces)]
-	if people == 0:
-		return 1
-
-	# Base case - single person left
-	if people == 1 and seats:
-		return seats
-
-	# Impossible case - not enough seats to accomodate people and spaces
-	if seats < people + spaces:
+def numWays(info):
+	numPeople = info["people"]
+	numSpaces = info["spaces"]
+	numSeats = info["seats"]
+	minSeats = numPeople+(numPeople-1)*numSpaces
+	if numSeats<minSeats:
 		return 0
+	elif numSeats==minSeats:
+		return 1
+	else:
+		r = numPeople
+		n = r+numSeats-minSeats
+		return getFactorial(n)/(getFactorial(r)*getFactorial(n-r))
+	
 
-	# When you fill, have to pad spaces
-	fill = SD(seats - spaces - 1, people - 1, spaces, pas, memo)
-
-	no_fill = SD(seats - 1, people, spaces, pas, memo)
-
-	memo[(seats, people, spaces)] = fill + no_fill
-
-	return fill + no_fill
+def getFactorial(num):
+	size=len(factorials)
+	if size>num:
+		return factorials[num]
+	else:
+		while size<=num:
+			factorials.append(factorials[size-1]*size)
+			size+=1
+		return factorials[size]
