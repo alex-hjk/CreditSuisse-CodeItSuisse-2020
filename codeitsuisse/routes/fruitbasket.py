@@ -15,8 +15,15 @@ logger = logging.getLogger(__name__)
 @app.route('/fruitbasket', methods=['POST'])
 def fruit_basket():
 	# Parsing input
-	data = request.get_json();
-	print(data)
+	byte_value = request.data
+
+	# Decode UTF-8 bytes to Unicode, and convert single quotes
+	# to double quotes to make it valid JSON
+	my_json = byte_value.decode('utf8').replace("'", '"')
+
+	# Load the JSON to a Python list & dump it back out as formatted JSON
+	data = json.loads(my_json)
+
 	apple_qty = data["maApple"]
 	watermelon_qty = data["maWatermelon"]
 	banana_qty = data["maBanana"]
