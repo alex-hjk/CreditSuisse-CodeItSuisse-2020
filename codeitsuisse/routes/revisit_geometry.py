@@ -7,8 +7,8 @@ from codeitsuisse import app
 
 logger = logging.getLogger(__name__)
 
-@app.route('/geometry', methods=['POST'])
-def evaluateGeometry():
+@app.route('/revisitgeometry', methods=['POST'])
+def revisitgeometry():
     data = request.get_json()
 
     lineCoordinates = data["lineCoordinates"]
