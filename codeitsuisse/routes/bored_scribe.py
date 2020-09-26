@@ -70,7 +70,7 @@ def bored_scribe():
     text = data[0]["encryptedText"]
 
     # Init infer space
-    words = open("utils/words.txt").read().split()
+    words = open("words.txt").read().split()
     wordcost = dict((k, log((i + 1) * log(len(words)))) for i, k in enumerate(words))
     maxword = max(len(x) for x in words)
 
