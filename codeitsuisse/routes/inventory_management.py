@@ -13,13 +13,13 @@ def inventory_management():
 	data = request.get_json()
 	print(type(data))
 	print(data)
-	searchItem = data["searchItemName"]
-	items = data["items"]
+	searchItem = data[0]["searchItemName"]
+	items = data[0]["items"]
 	result = topTenMatches(items,searchItem)
-	resp = {
+	resp = [{
 		"searchItemName": searchItem,
 		"searchResult": result
-	}
+	}]
 	return json.dumps(resp)
 
 def levenshteinDistance(startStr, endStr):
