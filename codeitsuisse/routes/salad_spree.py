@@ -78,6 +78,6 @@ def salad_spree():
 					i += 1
 		print(f'END min_price: {min_price}\n')
 
-	output = {"result": min_price, "stree": i}
+	output = {"result": min_price}
 
 	return jsonify(output);
