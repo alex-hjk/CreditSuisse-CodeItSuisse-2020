@@ -15,14 +15,7 @@ logger = logging.getLogger(__name__)
 @app.route('/contact_trace', methods=['POST'])
 def contact_trace():
 	# Parsing input
-	byte_value = request.data
-
-	# Decode UTF-8 bytes to Unicode, and convert single quotes
-	# to double quotes to make it valid JSON
-	my_json = byte_value.decode('utf8').replace("'", '"')
-
-	# Load the JSON to a Python list & dump it back out as formatted JSON
-	data = json.loads(my_json)
+	data = request.get_json();
 
 	print(data)
 	print(type(data))
