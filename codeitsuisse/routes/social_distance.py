@@ -51,4 +51,4 @@ def getFactorial(num):
 		while size<=num:
 			factorials.append(factorials[size-1]*size)
 			size+=1
-		return factorials[size]
+		return factorials[num]
