@@ -66,65 +66,125 @@ def bored_scribe():
 
         return " ".join(reversed(out))
 
-    print(data)
-
-    _id = data[0]["id"]
-    text = data[0]["encryptedText"]
+    result = []
 
     # Init infer space
-    # words = open(os.path.join(os.getcwd(), "words.txt")).read().split()
-    words = urllib.request.urlopen("https://raw.githubusercontent.com/YeeeeeHan/SG-alexyhjs/master/codeitsuisse/routes"
-                               "/words.txt").read().decode("utf-8").split()
+    words = urllib.request.urlopen(
+        "https://raw.githubusercontent.com/YeeeeeHan/SG-alexyhjs/master/codeitsuisse/routes/words.txt").read().decode(
+        "utf-8").split()
     wordcost = dict((k, log((i + 1) * log(len(words)))) for i, k in enumerate(words))
     maxword = max(len(x) for x in words)
 
-    pals = palindromes(text)
+    for test in range(len(data)):
 
-    pals.sort(key=len, reverse=True)
-    res = len(pals)
+        _id = data[test]["id"]
+        text = data[test]["encryptedText"]
+        tries = 1
 
-    print("pals", pals)
+        def palindromes(text):
+            results = set()
+            text_length = len(text)
+            for idx, char in enumerate(text):
 
-    if pals:
+                # Check for longest odd palindrome(s)
+                start, end = idx - 1, idx + 1
+                while start >= 0 and end < text_length and text[start] == text[end]:
+                    results.add(text[start:end + 1])
+                    start -= 1
+                    end += 1
 
-        for char in pals[0]:
-            print(char, ord(char))
-            res += ord(char)
+                # Check for longest even palindrome(s)
+                start, end = idx, idx + 1
+                while start >= 0 and end < text_length and text[start] == text[end]:
+                    results.add(text[start:end + 1])
+                    start -= 1
+                    end += 1
 
-        print(res, res % 26)
-        print()
+            return list(results)
 
-        alpha = pals[0]
-        # alpha = "oxzbzxo"
-        # alpha = "abcdefghijklmnopqrstuvwxyz"
+        def reverse_cipher(text):
+            ans = ""
+            for _ in text:
+                ans += chr(((ord(_) + 26 - 1 - 97) % 26) + 97)
 
-        for i in range(26):
-            diff = 0
-            for char in alpha:
-                x = ord(char)
-                split = 97 + i
-                if x < split:
-                    tmp = 26 - i
-                else:
-                    tmp = -i
-                diff += tmp
+            return ans
 
-            print(diff, (res + diff) % 26, i)
-            if (res + diff) % 26 == i:
-                print(i)
-                orig = reverse_cipher(text, i)
-                print(orig)
-                # break
+        def cipher_shift(text, shift):
+            ans = ""
+            for _ in text:
+                ans += chr(((ord(_) + shift - 97) % 26) + 97)
 
-    else:
-        orig = reverse_cipher(text, ord(text[0]) % 26)
+            return ans
 
-    sentence = infer_spaces(orig)
-    print(sentence)
+        def encrypt(text):
+            pals = palindromes(text)
 
-    result = [{"id": _id, "encryptionCount": 1, "originalText": sentence}]
+            pals.sort(key=len, reverse=True)
+            shift = len(pals)
+
+            print("pals", pals)
+
+            if pals:
+                for char in pals[0]:
+                    print(char, ord(char))
+                    shift += ord(char)
+
+                print("res", shift % 26)
+
+                return cipher_shift(text, shift % 26)
+            else:
+                return cipher_shift(text, ord(text[0]) % 26)
+
+        def infer_spaces(s):
+            def best_match(i):
+                candidates = enumerate(reversed(cost[max(0, i - maxword):i]))
+                return min((c + wordcost.get(s[i - k - 1:i], 9e999), k + 1) for k, c in candidates)
+
+            # Build the cost array.
+            cost = [0]
+            for i in range(1, len(s) + 1):
+                c, k = best_match(i)
+                cost.append(c)
+
+            # Backtrack to recover the minimal-cost string.
+            out = []
+            i = len(s)
+            while i > 0:
+                c, k = best_match(i)
+                assert c == cost[i]
+                out.append(s[i - k:i])
+                i -= k
+
+            return " ".join(reversed(out))
+
+        words = urllib.request.urlopen("https://raw.githubusercontent.com/YeeeeeHan/SG-alexyhjs/master/codeitsuisse"
+                                       "/routes")
+        wordcost = dict((k, log((i + 1) * log(len(words)))) for i, k in enumerate(words))
+        maxword = max(len(x) for x in words)
+
+        new = text
+        for shifts in range(26):
+            new = reverse_cipher(new)
+            print(new)
+
+            sentence = infer_spaces(new)
+            longest_word = len(max(sentence.split(), key=len))
+            print(sentence)
+            if longest_word > 5:
+                print(shifts)
+                break
+
+        print(new)
+        tries = 1
+        while new != text:
+            new = encrypt(new)
+            print("try", tries, new)
+            tries += 1
+
+            print(text)
+
+        result.append({"id": _id, "encryptionCount": tries, "originalText": sentence})
 
     logging.info("My result :{}".format(result))
     return jsonify(result)
-
 
