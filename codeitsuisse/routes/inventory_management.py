@@ -15,6 +15,7 @@ def inventory_management():
 	print(data)
 	resp = []
 	for testCase in data:
+		print(testCase)
 		searchItem = testCase["searchItemName"]
 		items = testCase["items"]
 		result = topTenMatches(items,searchItem)
@@ -28,7 +29,9 @@ def levenshteinDistance(startStr, endStr):
 	result = ""
 	startSize = len(startStr)
 	endSize = len(endStr)
-	distGrid = [[0]*(endSize+1)]*(startSize+1)
+	distGrid = []
+	for _ in range(startSize+1):
+		distGrid.append([None for _ in range(endSize+1)])
 	for i in range(endSize+1):
 		distGrid[0][i] = i
 	for i in range(startSize):
@@ -85,19 +88,6 @@ def levenshteinDistance(startStr, endStr):
 
 	return distGrid[startSize][endSize],result
 
-def cmp(item1, item2):
-	if item1[0]==item2[0]:
-		if item1[1]<item2[1]:
-			return -1
-		elif item1[1]>item2[1]:
-			return 1
-		else:
-			return 0
-	elif item1[0]<item2[0]:
-		return -1
-	else:
-		return 1
-
 def topTenMatches(searches, target):
 	targetTokens = target.split()
 	matchOrder = []
@@ -113,7 +103,7 @@ def topTenMatches(searches, target):
 		currList = [totalEdits,search,editedStr]
 		matchOrder.append(currList)
 
-	sortedOrder = sorted(matchOrder, key=cmp)
+	sortedOrder = sorted(matchOrder, key=lambda x: (x[0], x[1]))
 	if len(sortedOrder)>10:
 		sortedOrder=sortedOrder[:10]
 
