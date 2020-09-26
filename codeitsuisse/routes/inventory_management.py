@@ -11,6 +11,8 @@ logger = logging.getLogger(__name__)
 @app.route('/inventory-management', methods=['POST'])
 def inventory_management():
 	data = request.get_json()
+	print(type(data))
+	print(data)
 	searchItem = data["searchItemName"]
 	items = data["items"]
 	result = topTenMatches(items,searchItem)
