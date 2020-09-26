@@ -8,7 +8,7 @@ from codeitsuisse import app;
 
 logger = logging.getLogger(__name__)
 
-@app.route('/inventory_management', methods=['POST'])
+@app.route('/inventory-management', methods=['POST'])
 def inventory_management():
 	data = request.get_json()
 	searchItem = data["searchItemName"]
