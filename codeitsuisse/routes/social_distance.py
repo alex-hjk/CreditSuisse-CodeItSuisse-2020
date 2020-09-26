@@ -46,10 +46,10 @@ def SD(seats, people, spaces, pas):
 		return 0
 
 	# When you fill, have to pad spaces
-	fill = SD(seats - spaces - 1, people - 1, spaces)
+	fill = SD(seats - spaces - 1, people - 1, spaces, pas)
 	print(f"  from fill {fill}")
 
-	no_fill = SD(seats - 1, people, spaces)
+	no_fill = SD(seats - 1, people, spaces, pas)
 	print(f"  from no_fill {no_fill}")
 
 	return fill + no_fill
