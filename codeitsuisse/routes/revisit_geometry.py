@@ -7,9 +7,11 @@ from codeitsuisse import app
 
 logger = logging.getLogger(__name__)
 
+
 @app.route('/revisitgeometry', methods=['POST'])
 def revisitgeometry():
     data = request.get_json()
+    logging.info("My data :{}".format(data))
 
     lineCoordinates = data["lineCoordinates"]
     shapeCoordinates = data["shapeCoordinates"]
@@ -39,7 +41,7 @@ def revisitgeometry():
         v = abs(a * q["x"] + b * q["y"] + c)
         x, y = (p["x"] * v + q["x"] * u) / (u + v), (p["y"] * v + q["y"] * u) / (u + v)
         result.append({"x": x, "y": y})
-        
+
     logging.info("My result :{}".format(result))
     return jsonify(result)
 

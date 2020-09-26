@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__)
 @app.route('/intelligent-farming', methods=['POST'])
 def intelligent_farming():
     data = request.get_json()
+    logging.info("My data :{}".format(data))
 
     runId = data["runId"]
     input_list = data["list"]
@@ -82,7 +83,7 @@ def intelligent_farming():
         output_list.append({"id": _id, "geneSequence": res})
 
     result = {"runId": runId, "list": output_list}
-    
+
     logging.info("My result :{}".format(result))
 
     return jsonify(result)
