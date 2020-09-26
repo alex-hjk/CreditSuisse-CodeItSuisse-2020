@@ -14,17 +14,15 @@ logger = logging.getLogger(__name__)
 
 @app.route('/clean_floor', methods=['POST'])
 def clean_floor():
-	# Parsing input
-	byte_value = request.data
+	req = request.get_json()
+	print(type(req))
+	res = {
+		"answers": {}
+	}
+	for test in req["tests"]:
+		res["answers"][test] = getMinMoves(req["tests"][test])
 
-	# Decode UTF-8 bytes to Unicode, and convert single quotes
-	# to double quotes to make it valid JSON
-	my_json = byte_value.decode('utf8').replace("'", '"')
+	return json.dumps(res)
 
-	# Load the JSON to a Python list & dump it back out as formatted JSON
-	data = json.loads(my_json)
-
-	print(data)
-	print(type(data))
-
-	return json.dumps(data)
+def getMinMoves(floorArray):
+	return 0
