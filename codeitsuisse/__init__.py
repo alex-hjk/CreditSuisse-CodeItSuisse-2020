@@ -11,5 +11,6 @@ import codeitsuisse.routes.inventory_management
 import codeitsuisse.routes.contractTrace
 import codeitsuisse.routes.social_distance
 import codeitsuisse.routes.bored_scribe
+import codeitsuisse.routes.cleanfloor
 
 
