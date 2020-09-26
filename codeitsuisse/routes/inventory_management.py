@@ -26,7 +26,6 @@ def inventory_management():
 	return json.dumps(resp)
 
 def levenshteinDistance(startStr, endStr):
-	result = ""
 	startSize = len(startStr)
 	endSize = len(endStr)
 	distGrid = []
@@ -42,11 +41,14 @@ def levenshteinDistance(startStr, endStr):
 			else:
 				distGrid[i+1][j+1] = min(distGrid[i+1][j],distGrid[i][j],distGrid[i][j+1])+1
 
+	print(distGrid[startSize][endSize])
+
+	result = ""
 	row = startSize
 	col = endSize
 
 	while row>0 and col>0:
-		if startStr[row-1].lower()==endStr[col-1].lower():
+		if startStr[row-1]==endStr[col-1]:
 			result = startStr[row-1]+result
 			row-=1
 			col-=1
@@ -61,6 +63,7 @@ def levenshteinDistance(startStr, endStr):
 					col-=1
 				else:
 					result='-'+startStr[row-1]+result
+					row-=1
 			elif row<col:
 				if distGrid[row][col-1]<distGrid[row][col]:
 					result='+'+endStr[col-1]+result
@@ -89,18 +92,10 @@ def levenshteinDistance(startStr, endStr):
 	return distGrid[startSize][endSize],result
 
 def topTenMatches(searches, target):
-	targetTokens = target.split()
 	matchOrder = []
 	for search in searches:
-		searchTokens = search.split()
-		totalEdits = 0
-		editedStr = ""
-		for i in range(len(searchTokens)):
-			edits,subStr = levenshteinDistance(targetTokens[i],searchTokens[i])
-			totalEdits += edits
-			editedStr += subStr+" "
-		editedStr=editedStr[:-1]
-		currList = [totalEdits,search,editedStr]
+		edits,editedStr = levenshteinDistance(target,search)		
+		currList = [edits,search,editedStr]
 		matchOrder.append(currList)
 
 	sortedOrder = sorted(matchOrder, key=lambda x: (x[0], x[1]))
