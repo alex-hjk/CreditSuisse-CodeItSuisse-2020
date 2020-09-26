@@ -75,7 +75,6 @@ def bored_scribe():
     # words = open(os.path.join(os.getcwd(), "words.txt")).read().split()
     words = urllib.request.urlopen("https://raw.githubusercontent.com/YeeeeeHan/SG-alexyhjs/master/codeitsuisse/routes"
                                "/words.txt").read().decode("utf-8").split()
-    print(words)
     wordcost = dict((k, log((i + 1) * log(len(words)))) for i, k in enumerate(words))
     maxword = max(len(x) for x in words)
 
