@@ -36,7 +36,7 @@ def social_distancing():
 
 
 def SD(seats, people, spaces, pas, memo):
-	print(f"input: {seats, people, spaces}")
+	print(f"input: {seats, people, spaces, pas}")
 
 	if memo.get((seats, people, spaces), None):
 		return memo[(seats, people, spaces)]
