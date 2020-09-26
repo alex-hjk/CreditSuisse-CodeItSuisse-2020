@@ -13,13 +13,12 @@ logger = logging.getLogger(__name__)
 def salad_spree():
 	data = request.get_json();
 
-	logging.info(f"data sent for evaluation {data}")
-	inputValue = data.get("input");
+	number_of_salads = data["number_of_salads"]
+	salad_prices_street_map = data["salad_prices_street_map"]
 
-	result = inputValue * inputValue
+	print(number_of_salads, file=sys.stdout)
+	print(salad_prices_street_map, file=sys.stdout)
 
-	logging.info("My result :{}".format(result))
+	output = {"result": 1}
 
-	print(data, file=sys.stdout)
-
-	return json.dumps(result);
+	return jsonify(output);
