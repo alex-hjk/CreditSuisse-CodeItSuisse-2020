@@ -19,8 +19,12 @@ def social_distancing():
 	res = {
 		"answers": {}
 	}
-	for test in req["tests"]:
-		res["answers"][test] = numWays(req["tests"][test])
+	testCases = req["tests"]
+	for test in testCases:
+		print(test)
+		info = testCases[test]
+		res["answers"][test] = numWays(info)
+	return json.dumps(res)
 	
 factorials = [1]
 
