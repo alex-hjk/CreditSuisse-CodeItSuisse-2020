@@ -1,6 +1,7 @@
 import logging
 import json
 from math import log
+import os
 
 from flask import request, jsonify
 
@@ -70,7 +71,8 @@ def bored_scribe():
     text = data[0]["encryptedText"]
 
     # Init infer space
-    words = open("./words.txt").read().split()
+    print(os.path.join(os.getcwd(), "words.txt"))
+    words = open(os.path.join(os.getcwd(), "words.txt")).read().split()
     wordcost = dict((k, log((i + 1) * log(len(words)))) for i, k in enumerate(words))
     maxword = max(len(x) for x in words)
 
