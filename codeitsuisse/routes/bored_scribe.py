@@ -157,11 +157,6 @@ def bored_scribe():
 
             return " ".join(reversed(out))
 
-        words = urllib.request.urlopen("https://raw.githubusercontent.com/YeeeeeHan/SG-alexyhjs/master/codeitsuisse"
-                                       "/routes")
-        wordcost = dict((k, log((i + 1) * log(len(words)))) for i, k in enumerate(words))
-        maxword = max(len(x) for x in words)
-
         new = text
         for shifts in range(26):
             new = reverse_cipher(new)
@@ -177,6 +172,8 @@ def bored_scribe():
         print(new)
         tries = 1
         while new != text:
+            if tries == 100:
+                break
             new = encrypt(new)
             print("try", tries, new)
             tries += 1
