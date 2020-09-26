@@ -20,7 +20,6 @@ def salad_spree():
 	salad_prices_street_map = data["salad_prices_street_map"]
 
 	street_length = len(salad_prices_street_map[0])
-
 	min_price = float("inf")
 	i = 0
 
@@ -30,8 +29,10 @@ def salad_spree():
 		current_left = 0
 		i = 0
 
+		# Iterate through stalls in street
 		while i < street_length:
 
+			# If encounter X, restart window
 			if street[i] == 'X':
 				print(f'i:{i} Encounter X')
 				# Comparison of k against street_length - quit early if 'X' is found within last K elements
@@ -47,6 +48,7 @@ def salad_spree():
 				i += 1
 				continue
 
+			# If consecutive still not met, continue
 			if consecutive < k:
 				street_price += int(street[i])
 
@@ -55,6 +57,7 @@ def salad_spree():
 					f"i:{i} -Building- street_price: {street_price}, consecutive: {consecutive}, curr_left: {current_left}")
 				i += 1
 
+			# If consecutive still not met, process price
 			if consecutive == k:
 				min_price = min(street_price, min_price)
 				print(f'     - Saved price1: {street_price}')
