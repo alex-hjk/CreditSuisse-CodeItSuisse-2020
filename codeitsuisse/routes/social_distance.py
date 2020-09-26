@@ -22,14 +22,15 @@ def social_distancing():
 
 	output = {"answers": {}}
 
-	memo = {}
 
 	for key, val in test_dict.items():
+		memo = {}
 		seats = val["seats"]
 		people = val["people"]
 		spaces = val["spaces"]
 
 		output["answers"][key] = SD(seats, people, spaces, (seats, people, spaces), memo)
+		print(memo)
 
 	return json.dumps(output)
 
