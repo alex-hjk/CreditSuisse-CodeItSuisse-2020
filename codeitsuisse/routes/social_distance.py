@@ -34,6 +34,8 @@ def social_distancing():
 
 def SD(seats, people, spaces, pas):
 	print(f"input: {seats, people, spaces, pas}")
+	if people == 0:
+		return 1
 
 	# Base case - single person left
 	if people == 1 and seats:
