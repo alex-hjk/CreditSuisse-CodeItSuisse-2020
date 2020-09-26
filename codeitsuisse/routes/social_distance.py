@@ -22,18 +22,21 @@ def social_distancing():
 
 	output = {"answers": {}}
 
+	memo = {}
+
 	for key, val in test_dict.items():
 		seats = val["seats"]
 		people = val["people"]
 		spaces = val["spaces"]
 
-		output["answers"][key] = SD(seats, people, spaces, (seats, people, spaces))
+		output["answers"][key] = SD(seats, people, spaces, (seats, people, spaces), memo)
 
 	return json.dumps(output)
 
 
-def SD(seats, people, spaces, pas):
-	print(f"input: {seats, people, spaces, pas}")
+def SD(seats, people, spaces, pas, memo):
+	if memo.get((seats, people, spaces), None):
+		return memo[(seats, people, spaces)]
 	if people == 0:
 		return 1
 
@@ -46,10 +49,10 @@ def SD(seats, people, spaces, pas):
 		return 0
 
 	# When you fill, have to pad spaces
-	fill = SD(seats - spaces - 1, people - 1, spaces, pas)
-	print(f"  from fill {fill}")
+	fill = SD(seats - spaces - 1, people - 1, spaces, pas, memo)
 
-	no_fill = SD(seats - 1, people, spaces, pas)
-	print(f"  from no_fill {no_fill}")
+	no_fill = SD(seats - 1, people, spaces, pas, memo)
+
+	memo[(seats, people, spaces)] = fill + no_fill
 
 	return fill + no_fill
