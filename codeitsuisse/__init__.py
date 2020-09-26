@@ -7,5 +7,6 @@ import codeitsuisse.routes.revisit_geometry
 import codeitsuisse.routes.intelligent_farming
 import codeitsuisse.routes.fruitbasket
 import codeitsuisse.routes.olympiad_of_babylon
+import codeitsuisse.routes.inventory_management
 
 
