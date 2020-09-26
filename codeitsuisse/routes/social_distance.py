@@ -27,13 +27,13 @@ def social_distancing():
 		people = val["people"]
 		spaces = val["spaces"]
 
-		output["answers"][key] = SD(seats, people, spaces)
+		output["answers"][key] = SD(seats, people, spaces, (seats, people, spaces))
 
 	return json.dumps(output)
 
 
-def SD(seats, people, spaces):
-	print(f"input: {seats, people, spaces}")
+def SD(seats, people, spaces, pas):
+	print(f"input: {seats, people, spaces, pas}")
 
 	# Base case - single person left
 	if people == 1 and seats:
