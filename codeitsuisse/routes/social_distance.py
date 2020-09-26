@@ -13,8 +13,8 @@ logger = logging.getLogger(__name__)
 # print(number_of_salads, file=sys.stdout)
 # print(salad_prices_street_map, file=sys.stdout)
 
-@app.route('/contact_trace', methods=['POST'])
-def contact_trace():
+@app.route('/social_distancing', methods=['POST'])
+def social_distancing():
 	# Parsing input
 	data = request.get_json();
 
