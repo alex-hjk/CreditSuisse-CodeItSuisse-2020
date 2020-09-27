@@ -2,9 +2,9 @@ import logging
 import json
 import sys
 
-from flask import request, jsonify;
+from flask import request, jsonify
 
-from codeitsuisse import app;
+from codeitsuisse import app
 
 from queue import Queue
 
