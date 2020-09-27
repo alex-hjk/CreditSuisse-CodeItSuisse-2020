@@ -167,19 +167,19 @@ def bored_scribe():
             longest_word = len(max(sentence.split(), key=len))
             print(sentence)
             if longest_word > 6:
-                print(shifts)
+                print("SPLIT", shifts, sentence)
                 break
 
         print(new)
-        tries = 1
+        explored = {}
+        tries = 0
         while new != text:
-            if tries == 100:
-                break
             new = encrypt(new)
             print("try", tries, new)
             tries += 1
-
-            print(text)
+            if new in explored:
+                break
+            explored[new] = 0
 
         result.append({"id": _id, "encryptionCount": tries, "originalText": sentence})
 
