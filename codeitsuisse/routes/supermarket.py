@@ -18,8 +18,8 @@ def evaluate():
     }
     testCases = req["tests"]
     for test in testCases:
-        res["answers"][test] = numSteps(test["maze"],test["start"],test["end"])
-    
+        info = testCases[test]
+        res["answers"][test] = numSteps(info["maze"],info["start"],info["end"])
     return json.dumps(res)
 
 
