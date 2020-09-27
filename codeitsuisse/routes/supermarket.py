@@ -28,7 +28,7 @@ def numSteps(maze, start, end):
     q.put([start,1])
     while q.empty()==False:
         curr = q.get()
-        maze[curr[0][0]][curr[0][1]]==1
+        maze[curr[0][1]][curr[0][0]]==1
         if curr[0]==end:
             return curr[1]
         if curr[0][0]>0 and maze[curr[0][1]][curr[0][0]-1]!=1:
