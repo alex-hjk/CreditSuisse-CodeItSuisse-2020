@@ -17,38 +17,24 @@ logger = logging.getLogger(__name__)
 def optimized_portfolio():
 	req = request.get_json()
 	res = {
-		"answers": {}
+		"outputs": []
+		#list of dicts
 	}
-	testCases = req["tests"]
+	testCases = req["inputs"] #testCases is a list of dicts
 	for test in testCases:
-		print(test)
-		info = testCases[test]
-		res["answers"][test] = numWays(info)
+		pfInfo = test["Portfolio"]
+		idxInfo = test["IndexFutures"]
+		res["outputs"].append(getOptimized(pfInfo,idxInfo))
 	return json.dumps(res)
-	
-factorials = [1]
 
-def numWays(info):
-	numPeople = info["people"]
-	numSpaces = info["spaces"]
-	numSeats = info["seats"]
-	minSeats = numPeople+(numPeople-1)*numSpaces
-	if numSeats<minSeats:
-		return 0
-	elif numSeats==minSeats:
-		return 1
-	else:
-		r = numPeople
-		n = r+numSeats-minSeats
-		return int(getFactorial(n)/(getFactorial(r)*getFactorial(n-r)))
-	
+def getOptimized(pfDict, idxList):
+	result = sorted(idxList, key = lambda x: (x["CoRelationCoefficient"]/x["FuturePrcVol"], 1/(x["IndexFuturePrice"]*x["Notional"])))
+	optRatio = round(result[0]["CoRelationCoefficient"]*pfDict["SpotPrcVol"]/result[0]["FuturePrcVol"],3)
+	print(optRatio)
+	numFtrs = round(optRatio*pfDict["Value"]/(result[0]["IndexFuturePrice"]*result[0]["Notional"]))
 
-def getFactorial(num):
-	size=len(factorials)
-	if size>num:
-		return factorials[num]
-	else:
-		while size<=num:
-			factorials.append(factorials[size-1]*size)
-			size+=1
-		return factorials[num]
+	return {
+		"HedgePositionName": result[0]["Name"],
+		"OptimalHedgeRatio": optRatio,
+		"NumFuturesContract": numFtrs
+	}

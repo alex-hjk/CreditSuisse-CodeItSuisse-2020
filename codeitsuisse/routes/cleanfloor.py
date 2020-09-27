@@ -27,3 +27,23 @@ def clean_floor():
 
 def getMinMoves(floorArray):
 	return 0
+
+{
+  "tests": {
+    "0": {
+      "floor":[0, 1]
+    },
+    "1": {
+      "floor":[1, 1]
+    },
+    ...
+  }
+}
+
+{
+  "answers": {
+    "0": 1,
+    "1": 2,
+    ...
+  }
+}
