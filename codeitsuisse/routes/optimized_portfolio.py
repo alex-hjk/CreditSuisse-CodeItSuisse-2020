@@ -30,7 +30,7 @@ def optimized_portfolio():
 	return json.dumps(res)
 
 def getOptimized(pfDict, idxList):
-	result = sorted(idxList, key = lambda x: (x["CoRelationCoefficient"]/x["FuturePrcVol"], 1/(x["IndexFuturePrice"]*x["Notional"])))
+	result = sorted(idxList, key = lambda x: ((x["CoRelationCoefficient"]/x["FuturePrcVol"]), (1/x["IndexFuturePrice"])))
 	print(result[0]["Name"])
 	optRatio = round(result[0]["CoRelationCoefficient"]*pfDict["SpotPrcVol"]/result[0]["FuturePrcVol"],3)
 	print(optRatio)

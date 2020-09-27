@@ -13,5 +13,6 @@ import codeitsuisse.routes.social_distance
 import codeitsuisse.routes.bored_scribe
 import codeitsuisse.routes.cleanfloor
 import codeitsuisse.routes.optimized_portfolio
+import codeitsuisse.routes.supermarket
 
 
