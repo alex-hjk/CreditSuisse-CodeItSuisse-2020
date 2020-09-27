@@ -24,4 +24,5 @@ if __name__ == "__main__":
     sock.bind(('localhost', 0))
     port = sock.getsockname()[1]
     sock.close()
+    app.config['JSON_SORT_KEYS'] = False
     app.run(port=5000)
