@@ -11,7 +11,7 @@ from queue import Queue
 logger = logging.getLogger(__name__)
 
 @app.route('/supermarket', methods=['POST'])
-def evaluate():
+def supermarket():
     req = request.get_json()
     res = {
         "answers": {}
@@ -19,11 +19,11 @@ def evaluate():
     testCases = req["tests"]
     for test in testCases:
         info = testCases[test]
-        res["answers"][test] = numSteps(info["maze"],info["start"],info["end"])
+        res["answers"][test] = numStepsRequired(info["maze"],info["start"],info["end"])
     return json.dumps(res)
 
 
-def numSteps(maze, start, end):
+def numStepsRequired(maze, start, end):
     start = [start[1],start[0]]
     end = [end[1],end[0]]
     q = Queue()
