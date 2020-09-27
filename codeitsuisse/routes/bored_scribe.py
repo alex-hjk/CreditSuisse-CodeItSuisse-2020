@@ -79,7 +79,7 @@ def bored_scribe():
 
         _id = data[test]["id"]
         text = data[test]["encryptedText"]
-        tries = 1
+        tries = 0
 
         def palindromes(text):
             results = set()
@@ -119,6 +119,7 @@ def bored_scribe():
         def encrypt(text):
             pals = palindromes(text)
 
+            pals.sort(key=lambda i: (text.find(i)))
             pals.sort(key=len, reverse=True)
             shift = len(pals)
 
@@ -165,7 +166,7 @@ def bored_scribe():
             sentence = infer_spaces(new)
             longest_word = len(max(sentence.split(), key=len))
             print(sentence)
-            if longest_word > 5:
+            if longest_word > 6:
                 print(shifts)
                 break
 
